@@ -34,6 +34,25 @@ let product =[
       res.status(201).json(newProduct);
  });
 
+ app.delete("/product/:id",(req,res)=>{
+const {id} =req.params;
+product=product.filter((product)=> product.id!==parseInt(id));
+res.status(204).send();
+ });
+
+ app.put("/product/:id",(req,res)=>{
+      const {id} =req.params;
+      const UpdateProduct = req.body;
+      const index = product.findIndex((product)=> product.id === parseInt(id));
+      if (index!==-1) {
+            product[index]={...product[index], ...UpdateProduct};
+            res.json(product[index]);
+            
+      } else {
+            res.status(404).json({message:"Product not Found"});
+      }
+ });
+
 app.get("/",(req,res)=>{
       res.send("Hello World")
 })
