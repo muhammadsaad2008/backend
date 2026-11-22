@@ -1,5 +1,24 @@
 import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 const app = express();
+
+import dns from "node:dns/promises";
+dns.setServers(["1.1.1.1","8.8.8.8"]);
+
+
+async function ConnectDB() {
+  try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("MongoDB Work ")
+  } catch (error) {
+        console.error("MongoDB connection error:",error);
+  }
+  
+}
+ConnectDB();
 
 app.use(express.json());
 
